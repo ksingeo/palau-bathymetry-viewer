@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Palau Bathymetry Viewer</title>
+  <meta name="description" content="Interactive viewer combining the five CRRF outer-reef bathymetry maps of Palau. Hover anywhere to read the depth in feet.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div id="map" aria-label="Bathymetry map"></div>
+
+  <aside id="panel">
+    <header>
+      <h1>Palau Bathymetry</h1>
+      <p class="sub">Outer reef slope · CRRF 2025</p>
+    </header>
+
+    <section id="readout" aria-live="polite">
+      <div class="depth" id="ro-depth">—</div>
+      <div class="meta" id="ro-meta">Hover or tap the map to read depth</div>
+      <div class="coords" id="ro-coords"></div>
+    </section>
+
+    <section>
+      <h2>Areas</h2>
+      <div id="areas" class="areas"></div>
+    </section>
+
+    <section>
+      <h2>Depth (feet)</h2>
+      <canvas id="legend" width="560" height="28"></canvas>
+      <div id="legend-ticks" class="ticks"></div>
+      <div class="hatch-key"><span class="swatch"></span> deeper than the source map's colour scale</div>
+    </section>
+
+    <section class="controls">
+      <label>Opacity <input id="opacity" type="range" min="0" max="100" value="90"></label>
+      <label class="check"><input id="toggle" type="checkbox" checked> Show bathymetry</label>
+    </section>
+
+    <details class="about">
+      <summary>About this data</summary>
+      <p>Depths are reconstructed from the colour-shaded map figures (Figures 6–10) in
+      <em>Ferrier-Loh, A. and P. L. Colin. 2025. Bathymetry of Palau's Outer Reef Slope. Technical Report,
+      Coral Reef Research Foundation.</em> Colours were converted back to depth using each figure's legend,
+      so values are approximate: pixel-level noise is about ±1% of each figure's depth scale, and the
+      figures' own rendering adds further error that hasn't been measured. Very shallow water near the reef
+      crest can't be resolved from the colours, so it is reported as "less than" a limit.</p>
+      <p>Vertical datum: MLLW (Malakal tide station). Horizontal: WGS 84 / UTM 53N, reprojected for display.</p>
+      <p><strong>Not for navigation.</strong></p>
+    </details>
+  </aside>
+
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
