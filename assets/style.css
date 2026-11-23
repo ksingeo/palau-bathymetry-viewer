@@ -28,25 +28,26 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
 #readout .meta { color: var(--muted); font-size: 12px; }
 #readout .coords { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 2px; }
 
-.areas { display: flex; flex-wrap: wrap; gap: 6px; }
-.areas button {
+.areas h3 { margin: 8px 0 4px; font-size: 11px; font-weight: 600; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chips button {
   font: inherit; font-size: 12px; color: var(--ink); background: rgba(255,255,255,.06);
-  border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; cursor: pointer;
 }
-.areas button:hover, .areas button:focus-visible { border-color: var(--accent); outline: none; }
+.chips button:hover, .chips button:focus-visible { border-color: var(--accent); outline: none; }
 
 #legend { width: 100%; height: 14px; border-radius: 3px; display: block; }
 .ticks { position: relative; height: 16px; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
 .ticks span:first-child { transform: none; }
 .ticks span:last-child { transform: translateX(-100%); }
-.hatch-key { margin-top: 6px; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-.hatch-key .swatch { width: 18px; height: 12px; border-radius: 2px;
-  background: repeating-linear-gradient(45deg, #6a7a90 0 3px, #3a4556 3px 6px); }
+.note { margin: 4px 0 0; font-size: 11px; color: var(--muted); }
+#legend-title { text-transform: none; letter-spacing: 0; font-size: 12px; }
 
 .controls label { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-top: 6px; }
 .controls input[type=range] { flex: 1; accent-color: var(--accent); }
 .about { margin-top: 14px; font-size: 12px; color: var(--muted); }
+.about a { color: var(--accent); }
 .about summary { cursor: pointer; color: var(--ink); }
 .about p { margin: 6px 0; }
 

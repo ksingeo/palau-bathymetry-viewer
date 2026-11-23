@@ -14,7 +14,7 @@
   <aside id="panel">
     <header>
       <h1>Palau Bathymetry</h1>
-      <p class="sub">Outer reef slope · CRRF 2025</p>
+      <p class="sub">Outer reef slope · Coral Reef Research Foundation</p>
     </header>
 
     <section id="readout" aria-live="polite">
@@ -29,10 +29,10 @@
     </section>
 
     <section>
-      <h2>Depth (feet)</h2>
+      <h2 id="legend-title">Depth (feet)</h2>
       <canvas id="legend" width="560" height="28"></canvas>
       <div id="legend-ticks" class="ticks"></div>
-      <div class="hatch-key"><span class="swatch"></span> deeper than the source map's colour scale</div>
+      <p class="note">Each section uses its own colour stretch; the scale follows the section under the cursor.</p>
     </section>
 
     <section class="controls">
@@ -42,14 +42,14 @@
 
     <details class="about">
       <summary>About this data</summary>
-      <p>Depths are reconstructed from the colour-shaded map figures (Figures 6–10) in
-      <em>Ferrier-Loh, A. and P. L. Colin. 2025. Bathymetry of Palau's Outer Reef Slope. Technical Report,
-      Coral Reef Research Foundation.</em> Colours were converted back to depth using each figure's legend,
-      so values are approximate: pixel-level noise is about ±1% of each figure's depth scale, and the
-      figures' own rendering adds further error that hasn't been measured. Very shallow water near the reef
-      crest can't be resolved from the colours, so it is reported as "less than" a limit.</p>
-      <p>Vertical datum: MLLW (Malakal tide station). Horizontal: WGS 84 / UTM 53N, reprojected for display.</p>
-      <p><strong>Not for navigation.</strong></p>
+      <p>The map shows the Coral Reef Research Foundation's published outer-reef bathymetry
+      (<a href="https://experience.arcgis.com/experience/e5d3c2bb8642421f94da0b982eb12733" target="_blank" rel="noopener">Outer Reef</a>
+      web experience), surveyed with multibeam sonar from 2019 to 2023 and combined with deep-water Scripps/NOAA data.</p>
+      <p>CRRF publishes the depths as coloured map tiles, not as numbers, so the depth readout is decoded from those
+      colours on a ~19 m grid. Two independent CRRF renderings agree to within about 5–10%. Treat readings as approximate.
+      Water deeper than a section's colour scale is filled in from the figures in the 2025 technical report where possible.</p>
+      <p>Vertical datum: MLLW (Malakal tide station). Map copyright &copy; 2026 Coral Reef Research Foundation.
+      No guarantee is made as to accuracy. <strong>Not for navigation.</strong></p>
     </details>
   </aside>
 

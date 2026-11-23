@@ -1,40 +1,40 @@
 /* Palau Bathymetry Viewer
- * Combines the five CRRF bathymetry maps into one Leaflet map and reports the depth (feet)
- * under the cursor. Depth comes from data/<id>.depth.png:
- *   R,G = depth in decimetres (16 bit), B = 0 no data / 1 depth / 2 deeper than figure scale.
+ * Shows the Coral Reef Research Foundation's outer-reef bathymetry tile services (ArcGIS Online) as one
+ * map and reports the depth (feet) under the cursor. Depth comes from data/<section>.depth.png on the
+ * global zoom-13 Web Mercator pixel grid: R*256+G = metres, B = flag (see tools/tiles/build_data.py).
  */
 (() => {
   'use strict';
-  const FT_PER_M = 3.28084;
+  const FT = 3.28084;
   const fmt = (n) => Math.round(n).toLocaleString('en-US');
+  const $ = (id) => document.getElementById(id);
 
-  const map = L.map('map', { zoomControl: false, preferCanvas: true, worldCopyJump: true });
+  const map = L.map('map', { zoomControl: false, worldCopyJump: true, maxZoom: 19 });
   window.bathyMap = map; // handy for debugging from the console
   L.control.zoom({ position: 'topright' }).addTo(map);
-  L.control.scale({ position: 'bottomright', imperial: true, metric: true }).addTo(map);
+  L.control.scale({ position: 'bottomright' }).addTo(map);
 
   const basemaps = {
     'Satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 18, attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics',
+      maxZoom: 19, maxNativeZoom: 18, attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics',
     }),
     'Ocean': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 13, attribution: '&copy; Esri, GEBCO, NOAA, Garmin',
+      maxZoom: 19, maxNativeZoom: 13, attribution: '&copy; Esri, GEBCO, NOAA, Garmin',
     }),
     'Dark': L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       maxZoom: 19, subdomains: 'abcd', attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
     }),
   };
   basemaps.Satellite.addTo(map);
+  const bathy = L.layerGroup().addTo(map);
+  L.control.layers(basemaps, { 'Bathymetry': bathy }, { position: 'topright' }).addTo(map);
+  map.attributionControl.addAttribution(
+    'Bathymetry &copy; 2026 <a href="https://www.coralreefpalau.org" target="_blank" rel="noopener">Coral Reef Research Foundation</a>');
 
-  const $ = (id) => document.getElementById(id);
   const ro = { depth: $('ro-depth'), meta: $('ro-meta'), coords: $('ro-coords') };
   const tip = $('tip');
-  const overlayGroup = L.layerGroup().addTo(map);
-  L.control.layers(basemaps, { 'Bathymetry': overlayGroup }, { position: 'topright' }).addTo(map);
-  map.attributionControl.addAttribution('Bathymetry &copy; <a href="https://www.coralreefpalau.org" target="_blank" rel="noopener">Coral Reef Research Foundation</a>');
+  let areas = [], Z = 13, ramp = [], activeLegend = null;
 
-  let areas = [];
-  // keep fitted areas clear of the info panel (left on desktop, bottom on phones)
   const fitPad = () => {
     const r = $('panel').getBoundingClientRect();
     return window.innerWidth <= 640
@@ -42,131 +42,140 @@
       : { paddingTopLeft: [r.right + 20, 20], paddingBottomRight: [60, 20] };
   };
 
-  fetch('data/manifest.json').then((r) => r.json()).then((manifest) => {
-    areas = manifest.areas;
-    drawLegend(manifest.ramp);
+  fetch('data/manifest.json').then((r) => r.json()).then((m) => {
+    areas = m.areas; Z = m.zoom; ramp = m.ramp;
     const all = L.latLngBounds([]);
-    const list = $('areas');
-    const addButton = (label, bounds) => {
-      const b = document.createElement('button');
-      b.textContent = label;
-      b.onclick = () => map.flyToBounds(bounds, { ...fitPad(), duration: 1.2 });
-      list.appendChild(b);
-    };
+    const groups = {};
     for (const a of areas) {
       a.llBounds = L.latLngBounds(a.bounds);
       all.extend(a.llBounds);
-      a.overlay = L.imageOverlay(`data/${a.id}.webp`, a.llBounds, { opacity: 0.9, interactive: false }).addTo(overlayGroup);
+      (groups[a.group] = groups[a.group] || []).push(a);
     }
-    addButton('All of Palau', all);
-    for (const a of areas) addButton(a.name, a.llBounds);
+    // where sections overlap, draw the narrower colour stretches underneath so the
+    // common 0-2,000 m stretch stays consistent on top
+    [...areas].sort((p, q) => p.scaleMax_m - q.scaleMax_m).forEach((a, i) => {
+      a.layer = L.tileLayer(a.tiles, {
+        bounds: a.llBounds.pad(0.02), maxNativeZoom: a.maxNativeZoom, maxZoom: 19, opacity: 0.9, zIndex: 10 + i,
+      }).addTo(bathy);
+    });
+    const box = $('areas');
+    const chip = (label, bounds, parent) => {
+      const b = document.createElement('button');
+      b.textContent = label;
+      b.onclick = () => map.flyToBounds(bounds, { ...fitPad(), duration: 1.2 });
+      parent.appendChild(b);
+    };
+    const top = document.createElement('div'); top.className = 'chips'; box.appendChild(top);
+    chip('All of Palau', all, top);
+    for (const [g, list] of Object.entries(groups)) {
+      const h = document.createElement('h3'); h.textContent = g; box.appendChild(h);
+      const row = document.createElement('div'); row.className = 'chips'; box.appendChild(row);
+      const gb = L.latLngBounds([]); list.forEach((a) => gb.extend(a.llBounds));
+      if (list.length > 1) chip(`All ${g.toLowerCase()}`, gb, row);
+      for (const a of list) chip(a.name, a.llBounds, row);
+    }
+    drawRampBar();
+    setLegend(areas.find((a) => a.scaleMax_m === 2000) || areas[0]);
     map.fitBounds(all, fitPad());
   });
 
-  // ---- depth sampling -------------------------------------------------------
-  async function loadDepth(a) {
-    if (a.grid || a.loading) return a.loading;
-    a.loading = (async () => {
+  // ---- depth grids (loaded per section on first hover) -------------------------
+  function loadGrid(a) {
+    if (!a.loading) a.loading = (async () => {
       const blob = await (await fetch(`data/${a.id}.depth.png`)).blob();
       let src;
-      try {
-        src = await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' });
-      } catch {
-        src = await new Promise((res, rej) => {
-          const img = new Image(); img.onload = () => res(img); img.onerror = rej; img.src = URL.createObjectURL(blob);
-        });
-      }
-      const c = document.createElement('canvas');
-      c.width = a.width; c.height = a.height;
-      const ctx = c.getContext('2d', { willReadFrequently: true });
-      ctx.drawImage(src, 0, 0);
-      const px = ctx.getImageData(0, 0, a.width, a.height).data;
-      const n = a.width * a.height;
-      const dm = new Uint16Array(n), flag = new Uint8Array(n);
-      for (let i = 0, j = 0; i < n; i++, j += 4) { dm[i] = (px[j] << 8) | px[j + 1]; flag[i] = px[j + 2]; }
-      a.grid = { dm, flag };
+      try { src = await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' }); }
+      catch { src = await new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = URL.createObjectURL(blob); }); }
+      const c = document.createElement('canvas'); c.width = a.width; c.height = a.height;
+      const ctx = c.getContext('2d', { willReadFrequently: true }); ctx.drawImage(src, 0, 0);
+      const px = ctx.getImageData(0, 0, a.width, a.height).data, n = a.width * a.height;
+      const m = new Uint16Array(n), f = new Uint8Array(n);
+      for (let i = 0, j = 0; i < n; i++, j += 4) { m[i] = (px[j] << 8) | px[j + 1]; f[i] = px[j + 2]; }
+      a.grid = { m, f };
     })();
     return a.loading;
   }
 
+  // sections overlap at their edges: prefer a direct tile reading, then a reef-top limit,
+  // then a report-figure value, then the deepest "deeper than" limit
+  const RANK = { 1: 4, 4: 3, 3: 2, 2: 1 };
   function sample(latlng) {
-    const p = L.CRS.EPSG3857.project(latlng);
+    const p = map.project(latlng, Z);
+    let best = null, pending = null;
     for (const a of areas) {
-      if (!a.llBounds.contains(latlng)) continue;
-      const [x0, y0, x1, y1] = a.mercBounds;
-      const col = Math.floor((p.x - x0) / (x1 - x0) * a.width);
-      const row = Math.floor((y1 - p.y) / (y1 - y0) * a.height);
+      const col = Math.floor(p.x) - a.x0, row = Math.floor(p.y) - a.y0;
       if (col < 0 || row < 0 || col >= a.width || row >= a.height) continue;
-      if (!a.grid) { loadDepth(a).then(() => lastLatLng && update(lastLatLng)); return { area: a, loading: true }; }
-      const i = row * a.width + col;
-      const flag = a.grid.flag[i];
-      if (flag === 0) continue;
-      return { area: a, m: a.grid.dm[i] / 10, deeper: flag === 2 };
+      if (!a.grid) { pending = pending || a; loadGrid(a).then(() => last && update(last.latlng, last.point)); continue; }
+      const i = row * a.width + col, flag = a.grid.f[i];
+      if (!flag) continue;
+      const c = { area: a, m: a.grid.m[i], flag };
+      if (!best || RANK[flag] > RANK[best.flag] || (flag === 2 && best.flag === 2 && c.m > best.m)) best = c;
     }
-    return null;
+    if (pending && (!best || best.flag !== 1)) return { area: pending, loading: true };
+    return best;
   }
 
   function describe(s) {
-    const a = s.area;
-    if (s.deeper) return { big: `> ${fmt(a.scaleMax_m * FT_PER_M)} ft`, small: `deeper than ${fmt(a.scaleMax_m)} m (edge of map scale)` };
-    if (s.m < a.shallowLimit_m) return { big: `< ${fmt(a.shallowLimit_m * FT_PER_M)} ft`, small: `reef edge, too shallow to resolve at this map's scale` };
-    return { big: `${fmt(s.m * FT_PER_M)} ft`, small: `${fmt(s.m)} m` };
+    const ft = fmt(s.m * FT), m = fmt(s.m);
+    switch (s.flag) {
+      case 2: return { big: `> ${ft} ft`, small: `deeper than ${m} m (beyond the map's colour scale)`, tip: `> ${ft} ft` };
+      case 3: return { big: `${ft} ft`, small: `${m} m · from the 2025 report figure (less precise)`, tip: `${ft} ft <small>${m} m</small>` };
+      case 4: return { big: `< ${ft} ft`, small: `shallower than ${m} m (reef top)`, tip: `< ${ft} ft` };
+      default: return { big: `${ft} ft`, small: `${m} m`, tip: `${ft} ft <small>${m} m</small>` };
+    }
   }
 
   const dms = (v, pos, neg) => {
     const h = v >= 0 ? pos : neg; v = Math.abs(v);
-    const d = Math.floor(v), m = (v - d) * 60;
-    return `${d}°${m.toFixed(3).padStart(6, '0')}′${h}`;
+    const d = Math.floor(v), mm = (v - d) * 60;
+    return `${d}°${mm.toFixed(3).padStart(6, '0')}′${h}`;
   };
 
-  let lastLatLng = null, pending = false, lastPoint = null;
+  let last = null, raf = false;
   function update(latlng, point) {
-    lastLatLng = latlng; if (point) lastPoint = point;
+    last = { latlng, point: point || (last && last.point) };
     ro.coords.textContent = `${dms(latlng.lat, 'N', 'S')}  ${dms(latlng.lng, 'E', 'W')}`;
-    const s = map.hasLayer(overlayGroup) ? sample(latlng) : null;
-    if (!s) {
-      ro.depth.textContent = '—'; ro.meta.textContent = 'No survey data here'; tip.hidden = true; return;
-    }
+    const s = map.hasLayer(bathy) ? sample(latlng) : null;
+    if (!s) { ro.depth.textContent = '—'; ro.meta.textContent = 'No survey data here'; tip.hidden = true; return; }
+    setLegend(s.area);
     if (s.loading) { ro.depth.textContent = '…'; ro.meta.textContent = `Loading ${s.area.name}`; tip.hidden = true; return; }
     const d = describe(s);
     ro.depth.textContent = d.big;
     ro.meta.textContent = `${d.small} · ${s.area.name}`;
-    tip.innerHTML = `${d.big} <small>${s.deeper || s.m < s.area.shallowLimit_m ? '' : d.small}</small>`;
-    if (lastPoint) { tip.style.left = `${lastPoint.x}px`; tip.style.top = `${lastPoint.y}px`; }
+    tip.innerHTML = d.tip;
+    if (last.point) { tip.style.left = `${last.point.x}px`; tip.style.top = `${last.point.y}px`; }
     tip.hidden = false;
   }
 
   map.on('mousemove', (e) => {
-    if (pending) return; pending = true;
-    requestAnimationFrame(() => { pending = false; update(e.latlng, e.containerPoint); });
+    if (raf) return; raf = true;
+    requestAnimationFrame(() => { raf = false; update(e.latlng, e.containerPoint); });
   });
   map.on('click', (e) => update(e.latlng, e.containerPoint)); // touch devices
-  map.on('mouseout', () => { tip.hidden = true; });
-  map.on('movestart', () => { tip.hidden = true; });
+  map.on('mouseout movestart', () => { tip.hidden = true; });
 
-  // ---- controls ---------------------------------------------------------------
-  $('opacity').addEventListener('input', (e) => {
-    const v = e.target.value / 100;
-    for (const a of areas) a.overlay && a.overlay.setOpacity(v);
-  });
-  $('toggle').addEventListener('change', (e) => {
-    if (e.target.checked) overlayGroup.addTo(map); else map.removeLayer(overlayGroup);
-  });
-  map.on('overlayadd overlayremove', () => { $('toggle').checked = map.hasLayer(overlayGroup); });
+  $('opacity').addEventListener('input', (e) => areas.forEach((a) => a.layer.setOpacity(e.target.value / 100)));
+  $('toggle').addEventListener('change', (e) => { if (e.target.checked) bathy.addTo(map); else map.removeLayer(bathy); });
+  map.on('overlayadd overlayremove', () => { $('toggle').checked = map.hasLayer(bathy); });
 
-  // ---- legend (same sqrt-scaled ramp used by tools/export.py) ------------------
-  function drawLegend(ramp) {
+  // ---- legend: CRRF's colour ramp, labelled for the section under the cursor ---------
+  function drawRampBar() {
     const cv = $('legend'), ctx = cv.getContext('2d');
-    const max = ramp[ramp.length - 1].ft, sq = ramp.map((s) => Math.sqrt(s.ft));
     for (let x = 0; x < cv.width; x++) {
-      const t = (x / (cv.width - 1)) * sq[sq.length - 1];
-      let k = 0; while (k < sq.length - 2 && t > sq[k + 1]) k++;
-      const f = (t - sq[k]) / (sq[k + 1] - sq[k]);
-      const c = ramp[k].rgb.map((v, i) => Math.round(v + (ramp[k + 1].rgb[i] - v) * f));
+      const t = (x / (cv.width - 1)) * (ramp.length - 1), k = Math.min(Math.floor(t), ramp.length - 2), f = t - k;
+      const c = ramp[k].map((v, i) => Math.round(v + (ramp[k + 1][i] - v) * f));
       ctx.fillStyle = `rgb(${c})`; ctx.fillRect(x, 0, 1, cv.height);
     }
-    const ticks = [0, 1000, 3000, 6000, max];
-    $('legend-ticks').innerHTML = ticks.map((ft) =>
-      `<span style="left:${(Math.sqrt(ft) / Math.sqrt(max)) * 100}%">${ft === max ? fmt(ft) + '+' : fmt(ft)}</span>`).join('');
+  }
+  function setLegend(a) {
+    if (!a || activeLegend === a) return;
+    activeLegend = a;
+    const lo = a.scaleMin_m, hi = a.scaleMax_m;
+    $('legend-title').textContent = `Depth (feet) · ${a.name}`;
+    $('legend-ticks').innerHTML = [0, 0.25, 0.5, 0.75, 1].map((t) => {
+      const ft = (lo + t * (hi - lo)) * FT;
+      const label = t === 0 ? `< ${fmt(ft)}` : t === 1 ? `> ${fmt(ft)}` : fmt(Math.round(ft / 50) * 50);
+      return `<span style="left:${t * 100}%">${label}</span>`;
+    }).join('');
   }
 })();
