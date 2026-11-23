@@ -1,0 +1,74 @@
+:root {
+  --bg: #0d1520;
+  --panel: rgba(13, 21, 32, 0.92);
+  --ink: #e8eef5;
+  --muted: #93a3b5;
+  --line: rgba(255, 255, 255, 0.12);
+  --accent: #4fc3f7;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+#map { position: absolute; inset: 0; background: var(--bg); cursor: crosshair; }
+
+#panel {
+  position: absolute; top: 12px; left: 12px; z-index: 1000; width: 300px;
+  max-height: calc(100% - 24px); overflow-y: auto;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 16px; backdrop-filter: blur(6px);
+}
+#panel header h1 { margin: 0; font-size: 18px; font-weight: 650; }
+#panel .sub { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+#panel section { margin-top: 14px; }
+#panel h2 { margin: 0 0 6px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+#readout { padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.03); }
+#readout .depth { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
+#readout .meta { color: var(--muted); font-size: 12px; }
+#readout .coords { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 2px; }
+
+.areas h3 { margin: 8px 0 4px; font-size: 11px; font-weight: 600; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chips button {
+  font: inherit; font-size: 12px; color: var(--ink); background: rgba(255,255,255,.06);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; cursor: pointer;
+}
+.chips button:hover, .chips button:focus-visible { border-color: var(--accent); outline: none; }
+
+#legend { width: 100%; height: 14px; border-radius: 3px; display: block; }
+.ticks { position: relative; height: 16px; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.ticks span:first-child { transform: none; }
+.ticks span:last-child { transform: translateX(-100%); }
+.note { margin: 4px 0 0; font-size: 11px; color: var(--muted); }
+#legend-title { text-transform: none; letter-spacing: 0; font-size: 12px; }
+
+.controls label { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-top: 6px; }
+.controls input[type=range] { flex: 1; accent-color: var(--accent); }
+.about { margin-top: 14px; font-size: 12px; color: var(--muted); }
+.about a { color: var(--accent); }
+.about summary { cursor: pointer; color: var(--ink); }
+.about p { margin: 6px 0; }
+
+#tip {
+  position: absolute; z-index: 1001; pointer-events: none;
+  background: rgba(8, 14, 22, .92); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 8px; font-size: 13px; font-weight: 600; white-space: nowrap;
+  font-variant-numeric: tabular-nums; transform: translate(14px, 14px);
+}
+#tip small { font-weight: 400; color: var(--muted); }
+
+.leaflet-container { font: inherit; }
+.leaflet-control-attribution { font-size: 10px; }
+
+@media (max-width: 640px) {
+  #panel { top: auto; bottom: 44px; left: 8px; right: 8px; width: auto; max-height: 45%; padding: 10px 12px; }
+  #panel section { margin-top: 10px; }
+  #readout .depth { font-size: 22px; }
+  .about { display: none; }
+}
+
+.leaflet-control-scale-line { background: rgba(13, 21, 32, .8); color: var(--ink); border-color: var(--muted); }
+.leaflet-control-attribution { background: rgba(13, 21, 32, .75) !important; color: var(--muted); }
+.leaflet-control-attribution a { color: var(--accent); }

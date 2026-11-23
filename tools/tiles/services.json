@@ -1,0 +1,227 @@
+{
+ "Western_Reef_1": {
+  "extent": [
+   14919281.468180018,
+   795104.4226408259,
+   14959879.678955667,
+   836040.4601117765
+  ],
+  "maxLevel": 17,
+  "name": "Western Reef 1",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Western_Reef_2": {
+  "extent": [
+   14933178.13019936,
+   833053.0172389398,
+   14966039.410244184,
+   850921.3539991364
+  ],
+  "maxLevel": 17,
+  "name": "Western Reef 2",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Western_Reef_3": {
+  "extent": [
+   14955656.35667174,
+   840807.6226751495,
+   14983226.534778202,
+   883539.6426578088
+  ],
+  "maxLevel": 17,
+  "name": "Western Reef 3",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "East_Ngarrard": {
+  "extent": [
+   14986995.598501278,
+   836608.2398270984,
+   15008288.373183796,
+   865027.0689671766
+  ],
+  "maxLevel": 17,
+  "name": "Eastern Reef 2 (Ngarrard)",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Eastern_Reef_1": {
+  "extent": [
+   14983921.36996844,
+   863517.4944285632,
+   15008200.879541986,
+   896510.8270011768
+  ],
+  "maxLevel": 16,
+  "name": "Eastern Reef 1",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Eastern_Reef_3": {
+  "extent": [
+   14979981.380006213,
+   810744.2209085486,
+   15012192.093930008,
+   845172.3203813465
+  ],
+  "maxLevel": 17,
+  "name": "Eastern Reef 3",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Eastern_Reef_4": {
+  "extent": [
+   14955152.637790259,
+   782926.1803063139,
+   15009544.95489652,
+   819642.5347270265
+  ],
+  "maxLevel": 17,
+  "name": "Eastern Reef 4",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Northern_Reef": {
+  "extent": [
+   14955819.03135106,
+   882742.2747237735,
+   15011052.253415026,
+   915765.8360393587
+  ],
+  "maxLevel": 17,
+  "name": "Northern Reef",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Kayangel_Outer_Reef": {
+  "extent": [
+   14989639.621641388,
+   895492.0092391963,
+   15001491.029386386,
+   909616.9054401414
+  ],
+  "maxLevel": 17,
+  "name": "Kayangel",
+  "range": [
+   5,
+   750
+  ],
+  "group": "Main island group"
+ },
+ "Angaur_Outer_Reef": {
+  "extent": [
+   14917155.414069936,
+   753273.9096250153,
+   14946805.795453332,
+   783305.444360822
+  ],
+  "maxLevel": 16,
+  "name": "Angaur",
+  "range": [
+   10,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Peleliu_Outer_Reef": {
+  "extent": [
+   14925993.721436482,
+   763645.397598789,
+   14973913.54163075,
+   795788.653055928
+  ],
+  "maxLevel": 16,
+  "name": "Peleliu \u2013 German Channel",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Main island group"
+ },
+ "Sonsorol": {
+  "extent": [
+   14712122.668711444,
+   585484.2621691002,
+   14726969.274664978,
+   605728.3389052252
+  ],
+  "maxLevel": 17,
+  "name": "Sonsorol & Fana",
+  "range": [
+   2,
+   1000
+  ],
+  "group": "Southwest Islands"
+ },
+ "Merir": {
+  "extent": [
+   14722888.241008112,
+   471223.9943656836,
+   14735250.39468332,
+   487840.54579689814
+  ],
+  "maxLevel": 17,
+  "name": "Merir",
+  "range": [
+   2,
+   1500
+  ],
+  "group": "Southwest Islands"
+ },
+ "Hatohobei": {
+  "extent": [
+   14582423.4963514,
+   321234.09439934196,
+   14610894.518024769,
+   349262.9509787022
+  ],
+  "maxLevel": 17,
+  "name": "Hatohobei (Tobi)",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Southwest Islands"
+ },
+ "Helen_Reef": {
+  "extent": [
+   14646589.23435617,
+   302506.21026089776,
+   14687309.59990441,
+   350125.62303432554
+  ],
+  "maxLevel": 17,
+  "name": "Helen Reef",
+  "range": [
+   5,
+   2000
+  ],
+  "group": "Southwest Islands"
+ }
+}

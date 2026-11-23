@@ -1,0 +1,522 @@
+{
+ "zoom": 13,
+ "ramp": [
+  [
+   255.0,
+   43.0,
+   24.0
+  ],
+  [
+   254.0,
+   63.0,
+   24.0
+  ],
+  [
+   254.0,
+   84.0,
+   24.0
+  ],
+  [
+   253.0,
+   106.0,
+   26.0
+  ],
+  [
+   252.0,
+   127.0,
+   27.0
+  ],
+  [
+   252.0,
+   147.0,
+   27.0
+  ],
+  [
+   251.0,
+   169.0,
+   28.0
+  ],
+  [
+   251.0,
+   190.0,
+   29.0
+  ],
+  [
+   244.0,
+   203.0,
+   39.0
+  ],
+  [
+   236.0,
+   210.0,
+   55.0
+  ],
+  [
+   227.0,
+   218.0,
+   73.0
+  ],
+  [
+   219.0,
+   225.0,
+   90.0
+  ],
+  [
+   210.0,
+   233.0,
+   107.0
+  ],
+  [
+   202.0,
+   241.0,
+   122.0
+  ],
+  [
+   193.0,
+   247.0,
+   140.0
+  ],
+  [
+   183.0,
+   252.0,
+   156.0
+  ],
+  [
+   165.0,
+   245.0,
+   170.0
+  ],
+  [
+   148.0,
+   238.0,
+   183.0
+  ],
+  [
+   130.0,
+   231.0,
+   197.0
+  ],
+  [
+   112.0,
+   223.0,
+   210.0
+  ],
+  [
+   95.0,
+   216.0,
+   223.0
+  ],
+  [
+   77.0,
+   208.0,
+   237.0
+  ],
+  [
+   60.0,
+   202.0,
+   251.0
+  ],
+  [
+   58.0,
+   182.0,
+   254.0
+  ],
+  [
+   62.0,
+   158.0,
+   254.0
+  ],
+  [
+   66.0,
+   134.0,
+   254.0
+  ],
+  [
+   72.0,
+   111.0,
+   253.0
+  ],
+  [
+   76.0,
+   87.0,
+   253.0
+  ],
+  [
+   80.0,
+   63.0,
+   253.0
+  ],
+  [
+   84.0,
+   39.0,
+   253.0
+  ],
+  [
+   88.0,
+   19.0,
+   252.0
+  ]
+ ],
+ "areas": [
+  {
+   "id": "Western_Reef_1",
+   "name": "Western Reef 1",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Western_Reef_1/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1829316,
+   "y0": 1004828,
+   "width": 2118,
+   "height": 2137,
+   "bounds": [
+    [
+     7.124569976824971,
+     134.02290344238284
+    ],
+    [
+     7.488430971475027,
+     134.38648223876953
+    ]
+   ],
+   "tileFit": 0.25
+  },
+  {
+   "id": "Western_Reef_2",
+   "name": "Western Reef 2",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Western_Reef_2/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1830040,
+   "y0": 1004048,
+   "width": 1718,
+   "height": 934,
+   "bounds": [
+    [
+     7.462219798470418,
+     134.1471862792969
+    ],
+    [
+     7.621164541350795,
+     134.44210052490232
+    ]
+   ],
+   "tileFit": 0.24
+  },
+  {
+   "id": "Western_Reef_3",
+   "name": "Western Reef 3",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Western_Reef_3/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1831218,
+   "y0": 1002340,
+   "width": 1439,
+   "height": 2236,
+   "bounds": [
+    [
+     7.53131857976111,
+     134.34940338134768
+    ],
+    [
+     7.911672411380461,
+     134.59642410278323
+    ]
+   ],
+   "tileFit": 0.2
+  },
+  {
+   "id": "East_Ngarrard",
+   "name": "Eastern Reef 2 (Ngarrard)",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/East_Ngarrard/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1832856,
+   "y0": 1003308,
+   "width": 1114,
+   "height": 1487,
+   "bounds": [
+    [
+     7.494047446538506,
+     134.63058471679688
+    ],
+    [
+     7.747053250893453,
+     134.82181549072266
+    ]
+   ],
+   "tileFit": 0.25
+  },
+  {
+   "id": "Eastern_Reef_1",
+   "name": "Eastern Reef 1",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Eastern_Reef_1/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 16,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1832694,
+   "y0": 1001661,
+   "width": 1271,
+   "height": 1726,
+   "bounds": [
+    [
+     7.733615563672159,
+     134.60277557373047
+    ],
+    [
+     8.027104781187532,
+     134.8209571838379
+    ]
+   ],
+   "tileFit": 0.29
+  },
+  {
+   "id": "Eastern_Reef_3",
+   "name": "Eastern Reef 3",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Eastern_Reef_3/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1832673,
+   "y0": 1004776,
+   "width": 1295,
+   "height": 927,
+   "bounds": [
+    [
+     7.339483049190197,
+     134.59917068481448
+    ],
+    [
+     7.4972811417554555,
+     134.82147216796878
+    ]
+   ],
+   "tileFit": 0.38
+  },
+  {
+   "id": "Eastern_Reef_4",
+   "name": "Eastern Reef 4",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Eastern_Reef_4/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1831191,
+   "y0": 1005685,
+   "width": 2843,
+   "height": 1918,
+   "bounds": [
+    [
+     7.015882821267281,
+     134.34476852416992
+    ],
+    [
+     7.342547626732787,
+     134.83280181884763
+    ]
+   ],
+   "tileFit": 0.38
+  },
+  {
+   "id": "Northern_Reef",
+   "name": "Northern Reef",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Northern_Reef/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1831226,
+   "y0": 1000655,
+   "width": 2888,
+   "height": 1724,
+   "bounds": [
+    [
+     7.905041289149367,
+     134.3507766723633
+    ],
+    [
+     8.198067883132127,
+     134.84653472900393
+    ]
+   ],
+   "tileFit": 0.27
+  },
+  {
+   "id": "Kayangel_Outer_Reef",
+   "name": "Kayangel",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Kayangel_Outer_Reef/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 750,
+   "x0": 1832993,
+   "y0": 1000975,
+   "width": 621,
+   "height": 740,
+   "bounds": [
+    [
+     8.01792578673712,
+     134.65410232543942
+    ],
+    [
+     8.14369387820472,
+     134.76070404052734
+    ]
+   ],
+   "tileFit": 0.24
+  },
+  {
+   "id": "Angaur_Outer_Reef",
+   "name": "Angaur",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Angaur_Outer_Reef/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 16,
+   "scaleMin_m": 10,
+   "scaleMax_m": 2000,
+   "x0": 1829205,
+   "y0": 1007588,
+   "width": 1545,
+   "height": 1565,
+   "bounds": [
+    [
+     6.751725993982562,
+     134.00384902954102
+    ],
+    [
+     7.018438454751335,
+     134.26906585693357
+    ]
+   ],
+   "tileFit": 0.21
+  },
+  {
+   "id": "Peleliu_Outer_Reef",
+   "name": "Peleliu \u2013 German Channel",
+   "group": "Main island group",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Peleliu_Outer_Reef/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 16,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1829874,
+   "y0": 1006939,
+   "width": 2292,
+   "height": 1666,
+   "bounds": [
+    [
+     6.845134985283071,
+     134.11869049072266
+    ],
+    [
+     7.128998690192003,
+     134.51213836669922
+    ]
+   ],
+   "tileFit": 0.26
+  },
+  {
+   "id": "Sonsorol",
+   "name": "Sonsorol & Fana",
+   "group": "Southwest Islands",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Sonsorol/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 2,
+   "scaleMax_m": 1000,
+   "x0": 1818471,
+   "y0": 1016878,
+   "width": 777,
+   "height": 1059,
+   "bounds": [
+    [
+     5.252161843900657,
+     132.16123580932614
+    ],
+    [
+     5.433161407714718,
+     132.29461669921878
+    ]
+   ],
+   "tileFit": 0.25
+  },
+  {
+   "id": "Merir",
+   "name": "Merir",
+   "group": "Southwest Islands",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Merir/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 2,
+   "scaleMax_m": 1500,
+   "x0": 1819034,
+   "y0": 1023047,
+   "width": 648,
+   "height": 870,
+   "bounds": [
+    [
+     4.2291523700031215,
+     132.25788116455078
+    ],
+    [
+     4.378076631497537,
+     132.36911773681638
+    ]
+   ],
+   "tileFit": 0.2
+  },
+  {
+   "id": "Hatohobei",
+   "name": "Hatohobei (Tobi)",
+   "group": "Southwest Islands",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Hatohobei/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1811684,
+   "y0": 1030299,
+   "width": 1490,
+   "height": 1467,
+   "bounds": [
+    [
+     2.8844086191072953,
+     130.99617004394534
+    ],
+    [
+     3.1358881972796504,
+     131.2519454956055
+    ]
+   ],
+   "tileFit": 0.38
+  },
+  {
+   "id": "Helen_Reef",
+   "name": "Helen Reef",
+   "group": "Southwest Islands",
+   "tiles": "https://tiles.arcgis.com/tiles/UhegwRIXa8Qj9weD/arcgis/rest/services/Helen_Reef/MapServer/tile/{z}/{y}/{x}",
+   "maxNativeZoom": 17,
+   "scaleMin_m": 5,
+   "scaleMax_m": 2000,
+   "x0": 1815047,
+   "y0": 1030257,
+   "width": 2122,
+   "height": 2485,
+   "bounds": [
+    [
+     2.71706730193577,
+     131.57346725463864
+    ],
+    [
+     3.1430871544027505,
+     131.93773269653317
+    ]
+   ],
+   "tileFit": 0.3
+  }
+ ]
+}
